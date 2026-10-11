@@ -3,12 +3,23 @@
 A fast, high-energy top-down tank shooter with a real rigid-body physics core.
 It has no dependencies and no asset files: every sprite is painted in code at start-up, and every sound effect and the music are synthesised with Web Audio.
 
+![Steel Storm title screen](docs/screenshots/title.jpg)
+
 ```bash
 npm start          # then open http://localhost:8080
 npm run build      # dist/steel-storm.html: one self-contained file, double-click to play offline
 ```
 
 `npm run build` uses no dependencies. It bundles the modules and inlines the fonts, and also writes `dist/steel-storm.artifact.html`, a page-body variant for publishing on claude.ai.
+
+## Screenshots
+
+| | |
+| --- | --- |
+| ![Triple kill in a firefight on the desert road](docs/screenshots/combat.jpg) | ![Behemoth boss fight at a road junction](docs/screenshots/boss.jpg) |
+| Combat: a triple kill, with a combo multiplier and shield active | Wave 5: the Behemoth boss |
+| ![Player tank by a river with a wooden bridge](docs/screenshots/river.jpg) | ![Field upgrade choice screen](docs/screenshots/upgrade.jpg) |
+| Procedural terrain: river, forest and a road bridge | Roguelite upgrade, 1 of 3 after each wave |
 
 ## Controls
 

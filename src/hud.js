@@ -416,9 +416,7 @@ export function drawTitle(game, ctx) {
   if (touchOnly) text(ctx, 'NEEDS A KEYBOARD AND MOUSE, OR A GAMEPAD', w / 2, h * 0.52, 20 * s, '#ffb347', 'center');
   else if (blink) text(ctx, 'CLICK OR PRESS ENTER TO DEPLOY', w / 2, h * 0.52, 26 * s, '#ffffff', 'center');
 
-  // Controls card
-  const cw = 560 * s, ch = 190 * s, cx = w / 2 - cw / 2, cy = h * 0.6;
-  panel(ctx, cx, cy, cw, ch, 0.6);
+  // Controls card, sized to fit its longest row
   const rows = [
     ['DRIVE', game.controlMode === 'arcade' ? 'WASD — tank turns toward the direction you press' : 'W/S throttle · A/D steer (classic tank controls)'],
     ['AIM / FIRE', 'Mouse aim · Left click cannon · Right click (or F) machine gun'],
@@ -426,6 +424,10 @@ export function drawTitle(game, ctx) {
     ['MISSILES', 'Space — homing salvo'],
     ['OPTIONS', `C controls: ${game.controlMode.toUpperCase()}  ·  M music  ·  ESC pause  ·  Gamepad supported`],
   ];
+  ctx.font = `${13 * s}px ${MONO}`;
+  const textW = Math.max(...rows.map(([, v]) => ctx.measureText(v).width));
+  const cw = Math.max(560 * s, 140 * s + textW + 24 * s), ch = 190 * s, cx = w / 2 - cw / 2, cy = h * 0.6;
+  panel(ctx, cx, cy, cw, ch, 0.6);
   rows.forEach(([k, v], i) => {
     const ry = cy + 26 * s + i * 33 * s;
     text(ctx, k, cx + 20 * s, ry, 13 * s, '#e8d36a', 'left', FONT);

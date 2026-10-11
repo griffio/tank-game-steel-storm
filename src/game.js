@@ -183,6 +183,14 @@ export class Game {
   }
 
   handleGlobalInput() {
+    const before = this.state;
+    this.handleStateInput();
+    // The key or click that changed state is used up, so starting a game or picking
+    // an upgrade with Space doesn't also fire a missile salvo in the same frame.
+    if (this.state !== before) this.input.endFrame();
+  }
+
+  handleStateInput() {
     const inp = this.input;
     if (inp.hit('KeyM')) audio.toggleMusic();
     if (this.state === 'title') {

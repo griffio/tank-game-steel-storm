@@ -5,6 +5,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "node server.mjs"
+    "start": "node server.mjs",
+    "build": "node build.mjs"
   }
 }

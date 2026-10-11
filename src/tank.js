@@ -482,4 +482,3 @@ export function leadAim(sx, sy, tx, ty, tvx, tvy, speed) {
   return Math.atan2(dy + tvy * t, dx + tvx * t);
 }
 
-export { angleDiff };

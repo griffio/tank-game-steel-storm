@@ -1201,4 +1201,3 @@ export class World {
   }
 }
 
-export { CHUNK, S };

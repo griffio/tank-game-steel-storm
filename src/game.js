@@ -12,16 +12,9 @@ import { audio } from './audio.js';
 import { buildSprites, drawSprite, soft } from './sprites.js';
 import { clamp, lerp, rand, randInt, pick, chance, TAU, angleDiff, makeCanvas, makeNoise } from './util.js';
 import * as HUD from './hud.js';
+import { PICKUPS } from './pickups.js';
 
 const STEP = 1 / 60;
-
-export const PICKUPS = {
-  repair: { color: '#2ecc71', label: 'REPAIR' },
-  missiles: { color: '#e67e22', label: '+3 MISSILES' },
-  overdrive: { color: '#9b59b6', label: 'OVERDRIVE!' },
-  shield: { color: '#3498db', label: 'SHIELD' },
-  nuke: { color: '#f1c40f', label: 'TACTICAL NUKE' },
-};
 
 export const UPGRADES = [
   { id: 'autoloader', name: 'Autoloader', desc: 'Cannon reloads 20% faster', icon: '⟳', apply: (p) => (p.mods.reload *= 0.8) },

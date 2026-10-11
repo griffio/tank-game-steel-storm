@@ -454,4 +454,3 @@ export class Particles {
   }
 }
 
-export { randInt };

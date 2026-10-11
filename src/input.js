@@ -56,7 +56,12 @@ export class Input {
   pollGamepad() {
     this.pad = null;
     this.padPressed.clear();
-    const pads = navigator.getGamepads ? navigator.getGamepads() : [];
+    let pads = [];
+    try {
+      pads = navigator.getGamepads ? navigator.getGamepads() : [];
+    } catch {
+      return;
+    }
     for (const p of pads) {
       if (p && p.connected) {
         this.pad = p;

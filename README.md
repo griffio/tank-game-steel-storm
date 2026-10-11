@@ -5,7 +5,10 @@ It has no dependencies and no asset files: every sprite is painted in code at st
 
 ```bash
 npm start          # then open http://localhost:8080
+npm run build      # dist/steel-storm.html: one self-contained file, double-click to play offline
 ```
+
+`npm run build` uses no dependencies. It bundles the modules and inlines the fonts, and also writes `dist/steel-storm.artifact.html`, a page-body variant for publishing on claude.ai.
 
 ## Controls
 

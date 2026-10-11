@@ -5,7 +5,9 @@ import { Game } from './game.js';
 async function boot() {
   const canvas = document.getElementById('screen');
   try {
-    await Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 1500))]);
+    // Canvas text only uses a web font once it has loaded, so request both up front.
+    const fonts = Promise.all(['20px "Russo One"', '20px "Share Tech Mono"'].map((f) => document.fonts.load(f)));
+    await Promise.race([fonts, new Promise((r) => setTimeout(r, 1500))]);
   } catch {}
   // Let the loading screen paint before the (synchronous) world generation.
   await new Promise((r) => setTimeout(r, 30));

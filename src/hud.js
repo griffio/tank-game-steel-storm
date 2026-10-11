@@ -3,7 +3,7 @@
 import { makeCanvas, clamp, TAU, lerp } from './util.js';
 import { WORLD_W, WORLD_H, TILE, T } from './world.js';
 import { Helicopter } from './enemies.js';
-import { PICKUPS } from './game.js';
+import { PICKUPS } from './pickups.js';
 
 const FONT = '"Russo One", "Arial Black", Impact, sans-serif';
 const MONO = '"Share Tech Mono", ui-monospace, Menlo, monospace';
@@ -411,8 +411,10 @@ export function drawTitle(game, ctx) {
   titleText(ctx, 'STEEL STORM', w / 2, h * 0.3 + bob, 110 * s);
   text(ctx, 'TRACKED ARMOUR  ·  RIGID-BODY PHYSICS  ·  TOTAL MAYHEM', w / 2, h * 0.3 + 78 * s, 15 * s, 'rgba(255,255,255,0.8)', 'center', MONO);
 
+  const touchOnly = window.matchMedia && matchMedia('(pointer: coarse)').matches && !matchMedia('(any-pointer: fine)').matches;
   const blink = Math.sin(t * 4) > -0.3;
-  if (blink) text(ctx, 'CLICK OR PRESS ENTER TO DEPLOY', w / 2, h * 0.52, 26 * s, '#ffffff', 'center');
+  if (touchOnly) text(ctx, 'NEEDS A KEYBOARD AND MOUSE, OR A GAMEPAD', w / 2, h * 0.52, 20 * s, '#ffb347', 'center');
+  else if (blink) text(ctx, 'CLICK OR PRESS ENTER TO DEPLOY', w / 2, h * 0.52, 26 * s, '#ffffff', 'center');
 
   // Controls card
   const cw = 560 * s, ch = 190 * s, cx = w / 2 - cw / 2, cy = h * 0.6;

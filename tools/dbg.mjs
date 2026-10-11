@@ -1,0 +1,13 @@
+import puppeteer from 'puppeteer-core';
+import { spawn } from 'node:child_process';
+const server = spawn('node', [new URL('../server.mjs', import.meta.url).pathname], { env: { ...process.env, PORT: '8138' }, stdio: 'ignore' });
+await new Promise((r) => setTimeout(r, 400));
+const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', defaultViewport: { width: 1440, height: 900 } });
+const page = await browser.newPage();
+page.on('pageerror', (e) => console.log('[pageerror]', e.message));
+await page.goto('http://localhost:8138/');
+await page.waitForFunction(() => window.game, { timeout: 20000 });
+const expr = process.argv[2];
+console.log(await page.evaluate(new Function('return (' + expr + ')')));
+await browser.close();
+server.kill();

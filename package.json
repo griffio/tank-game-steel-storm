@@ -1,0 +1,10 @@
+{
+  "name": "steel-storm",
+  "version": "1.0.0",
+  "description": "A fast, physics-driven top-down tank shooter. No dependencies: canvas sprites and Web Audio are all procedural.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node server.mjs"
+  }
+}

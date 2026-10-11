@@ -1,0 +1,41 @@
+// Close-up and boss-fight screenshots for visual review.
+import puppeteer from 'puppeteer-core';
+import { spawn } from 'node:child_process';
+const out = new URL('./out/', import.meta.url).pathname;
+const server = spawn('node', [new URL('../server.mjs', import.meta.url).pathname], { env: { ...process.env, PORT: '8141' }, stdio: 'ignore' });
+await new Promise((r) => setTimeout(r, 400));
+const browser = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', defaultViewport: { width: 1440, height: 900, deviceScaleFactor: 2 } });
+const page = await browser.newPage();
+const errors = [];
+page.on('pageerror', (e) => errors.push(e.message + ' ' + e.stack));
+await page.goto('http://localhost:8141/');
+await page.waitForFunction(() => window.game && window.game.world);
+await page.evaluate(() => {
+  const g = window.game;
+  g.startGame();
+  g.player.hp = g.player.maxHp = 1e6;
+  g.wave = 4; g.startWave(5);
+  g.spawnQueue = [];
+  for (const k of ['boss', 'heavy', 'battle', 'scout', 'truck', 'heli']) g.spawnEnemy(k);
+  const p = g.player;
+  const place = (t, dx, dy) => { t.body.x = p.x + dx; t.body.y = p.y + dy; };
+  place(g.enemyTanks[0].tank, 330, -60);
+  place(g.enemyTanks[1].tank, -250, 160);
+  place(g.enemyTanks[2].tank, 120, 230);
+  place(g.enemyTanks[3].tank, -200, -190);
+  place(g.enemyTanks[4].tank, 420, 260);
+  g.air[0].x = p.x - 80; g.air[0].y = p.y - 250;
+  for (let i = 0; i < 4; i++) g.spawnDrone(p.x + 300 + i * 30, p.y + 330);
+});
+await page.mouse.move(1000, 420);
+await page.mouse.down();
+await new Promise((r) => setTimeout(r, 1600));
+await page.mouse.up();
+await page.screenshot({ path: out + 'boss.png' });
+// Close-up for sprite quality
+await page.evaluate(() => { const g = window.game; g.baseZoom = 2.2; g.cam.zoom = 2.2; });
+await new Promise((r) => setTimeout(r, 900));
+await page.screenshot({ path: out + 'closeup.png' });
+console.log(errors.length ? errors.join('\n') : 'no errors');
+await browser.close();
+server.kill();
